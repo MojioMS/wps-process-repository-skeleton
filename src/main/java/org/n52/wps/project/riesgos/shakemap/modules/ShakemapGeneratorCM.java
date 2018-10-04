@@ -49,9 +49,8 @@ package org.n52.wps.project.riesgos.shakemap.modules;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.n52.wps.project.riesgos.shakemap.io.QuakeMLGenerator;
 
-import org.n52.wps.project.riesgos.shakemap.io.ShakemapGenerator;
-import org.n52.wps.project.riesgos.shakemap.io.ShakemapParser;
 import org.n52.wps.webapp.api.AlgorithmEntry;
 import org.n52.wps.webapp.api.ClassKnowingModule;
 import org.n52.wps.webapp.api.ConfigurationCategory;
@@ -108,7 +107,7 @@ public class ShakemapGeneratorCM extends ClassKnowingModule{
 
     @Override
     public String getClassName() {
-        return ShakemapGenerator.class.getName();
+        return QuakeMLGenerator.class.getName();
     }
 
 }

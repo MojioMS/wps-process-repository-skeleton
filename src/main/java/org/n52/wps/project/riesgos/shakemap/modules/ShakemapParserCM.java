@@ -49,8 +49,8 @@ package org.n52.wps.project.riesgos.shakemap.modules;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.n52.wps.project.riesgos.shakemap.io.QuakeMLParser;
 
-import org.n52.wps.project.riesgos.shakemap.io.ShakemapParser;
 import org.n52.wps.webapp.api.AlgorithmEntry;
 import org.n52.wps.webapp.api.ClassKnowingModule;
 import org.n52.wps.webapp.api.ConfigurationCategory;
@@ -107,7 +107,7 @@ public class ShakemapParserCM extends ClassKnowingModule{
 
     @Override
     public String getClassName() {
-        return ShakemapParser.class.getName();
+        return QuakeMLParser.class.getName();
     }
 
 }

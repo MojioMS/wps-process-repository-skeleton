@@ -49,39 +49,42 @@ package org.n52.wps.project.riesgos.shakemap;
 
 import java.io.IOException;
 import java.io.InputStream;
+import org.geotools.feature.FeatureCollection;
+import org.geotools.feature.FeatureIterator;
+//import org.geotools.geojson.feature.FeatureJSON;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.n52.wps.io.test.datahandler.AbstractTestCase;
-import org.n52.wps.project.riesgos.shakemap.io.ShakemapDataBinding;
-import org.n52.wps.project.riesgos.shakemap.io.ShakemapParser;
+import org.n52.wps.project.riesgos.shakemap.io.QuakeMLDataBinding;
+import org.n52.wps.project.riesgos.shakemap.io.QuakeMLParser;
+import org.opengis.feature.Feature;
+import org.opengis.feature.Property;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import gov.usgs.earthquake.eqcenter.shakemap.ShakemapGridDocument;
 
 /**
  * Test class for GeoJSON parser and generator
  *
- * @author Benjamin Pross(bpross-52n)
+ * @author Maurin Radtke <m.radtke@52north.org>
  *
  */
-public class ShakemapParserTest extends AbstractTestCase<ShakemapParser> {
+public class QuakeMLParserTest extends AbstractTestCase<QuakeMLParser> {
 
-    protected static final Logger LOGGER = LoggerFactory.getLogger(ShakemapParserTest.class);
+    protected static final Logger LOGGER = LoggerFactory.getLogger(QuakeMLParserTest.class);
 
     @Test
-    public void testParseWriteGeoJSONPoint() {
+    public void testParseInvalidQuakeML() {
 
         if (!isDataHandlerActive()) {
             return;
         }
 
-        ShakemapParser theParser = new ShakemapParser();
+        QuakeMLParser theParser = new QuakeMLParser();
 
-        InputStream in = getClass().getResourceAsStream("us2000fzwt_us_1531091459400_download_grid.xml");
+        InputStream in = getClass().getResourceAsStream("QuakeML process output_wrong.xml");
 
-        ShakemapDataBinding theBinding = theParser.parse(in, null, null);
+        QuakeMLDataBinding theBinding = theParser.parse(in, null, null);
 
         try {
             in.close();
@@ -91,15 +94,83 @@ public class ShakemapParserTest extends AbstractTestCase<ShakemapParser> {
 
         Assert.assertTrue(theBinding.getPayload() != null);
 
-        ShakemapGridDocument shakemapGrid = theBinding.getPayload();
+        FeatureCollection fc = theBinding.getPayload();
 
-        Assert.assertTrue(shakemapGrid.getShakemapGrid().getEventId().equals("us2000fzwt"));
+        FeatureIterator features = fc.features();
+
+        Feature firstFeature = null;
+        Feature secondFeature = null;
+        Feature thirdFeature = null;
+
+        while (features.hasNext()) {
+            Feature currentFeature = features.next();
+            switch (currentFeature.getIdentifier().getID()){
+                case "65570":
+                    firstFeature = currentFeature;
+                    break;
+                case "95564":
+                    secondFeature = currentFeature;
+                    break;
+                case "334079":
+                    thirdFeature = currentFeature;
+                    break;
+            }
+        }
+
+        Property magnitudeMagValue = firstFeature.getProperty("magnitude.mag.value");
+
+        Assert.assertTrue(magnitudeMagValue.getValue().toString().equals("7.4"));
+
+        Property time = secondFeature.getProperty("origin.time.value");
+
+        Assert.assertTrue(
+                time.getValue().toString().equals("65303-01-01T00:00:00.000000Z"));
+
+        Property depthValue = secondFeature.getProperty("origin.depth.value");
+
+        Assert.assertTrue(
+                depthValue.getValue().toString().equals("8.0"));
+
+        Assert.assertTrue(thirdFeature.getIdentifier().getID().equals("334079"));
+
+        Property originUncertaintyAzimuthMaxHorizontalUncertainty = thirdFeature.getProperty("originUncertainty.azimuthMaxHorizontalUncertainty");
+
+        Assert.assertTrue(
+                originUncertaintyAzimuthMaxHorizontalUncertainty.getValue().toString().equals("nan"));
+    }
+
+    @Test
+    public void testParseValidQuakeML() {
+
+        if (!isDataHandlerActive()) {
+            return;
+        }
+
+        QuakeMLParser theParser = new QuakeMLParser();
+
+        InputStream in = getClass().getResourceAsStream("QuakeML process output_right.xml");
+
+        QuakeMLDataBinding theBinding = theParser.parse(in, null, null);
+
+        try {
+            in.close();
+        } catch (IOException e) {
+            LOGGER.info("Failed to close InputStream.", e);
+        }
+
+        Assert.assertTrue(theBinding.getPayload() != null);
+
+        FeatureCollection fc = theBinding.getPayload();
+
+        Feature firstFeature =  fc.features().next();
+
+        Assert.assertTrue(firstFeature.getIdentifier().getID().equals("smi:nz.org.geonet/event/2806038g"));
 
     }
 
     @Override
     protected void initializeDataHandler() {
-        dataHandler = new ShakemapParser();
+        dataHandler = new QuakeMLParser();
     }
 
 }

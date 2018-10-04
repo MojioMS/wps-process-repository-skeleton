@@ -1,24 +1,22 @@
 package org.n52.wps.project.riesgos.shakemap.algorithm;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.xmlbeans.XmlException;
 import org.n52.wps.io.data.IData;
 import org.n52.wps.io.data.binding.complex.GenericFileDataBinding;
-import org.n52.wps.project.riesgos.shakemap.io.ShakemapDataBinding;
 import org.n52.wps.server.AbstractObservableAlgorithm;
 import org.n52.wps.server.ExceptionReport;
 import org.n52.wps.server.ProcessDescription;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import gov.usgs.earthquake.eqcenter.shakemap.ShakemapGridDocument;
 import net.opengis.wps.x100.ProcessDescriptionsDocument;
+import org.n52.wps.project.riesgos.shakemap.io.QuakeMLDataBinding;
+import org.n52.wps.project.riesgos.shakemap.io.QuakeMLParser;
 
 public class ShakemapAlgorithm extends AbstractObservableAlgorithm {
 
@@ -31,7 +29,6 @@ public class ShakemapAlgorithm extends AbstractObservableAlgorithm {
     private String outputID = "shakemap";
 
     public ShakemapAlgorithm(){
-
     }
 
     public ShakemapAlgorithm(String processID) {
@@ -50,28 +47,29 @@ public class ShakemapAlgorithm extends AbstractObservableAlgorithm {
 
     @Override
     public Class<?> getOutputDataType(String id) {
-        return ShakemapDataBinding.class;
+        return QuakeMLDataBinding.class;
     }
 
     @Override
     public Map<String, IData> run(Map<String, List<IData>> inputs) throws ExceptionReport {
         LOGGER.info("Starting process with id: " + processID);
 
-        InputStream in = getClass().getResourceAsStream("us2000fzwt_us_1531091459400_download_grid.xml");
+        InputStream in = getClass().getResourceAsStream("QuakeML process output.xml");
 
-        ShakemapGridDocument shakemapGridDocument;
+        QuakeMLDataBinding quakemlDataBinding;
+
+        QuakeMLParser theParser = new QuakeMLParser();
+
         try {
-            shakemapGridDocument = ShakemapGridDocument.Factory.parse(in);
-        } catch (XmlException | IOException e) {
-            LOGGER.error("Could not parse Shakemap.", e);
-            throw new ExceptionReport("Could not parse Shakemap.", ExceptionReport.NO_APPLICABLE_CODE, e);
+            quakemlDataBinding = theParser.parse(in, null, null);
+        } catch (Exception e) {
+            LOGGER.error("Could not parse QuakeML.", e);
+            throw new ExceptionReport("Could not parse QuakeML.", ExceptionReport.NO_APPLICABLE_CODE, e);
         }
-
-        ShakemapDataBinding shakemapDataBinding = new ShakemapDataBinding(shakemapGridDocument);
 
         Map<String, IData> outputMap = new HashMap<String, IData>(1);
 
-        outputMap.put(outputID, shakemapDataBinding);
+        outputMap.put(outputID, quakemlDataBinding);
 
         LOGGER.info("Finished process with id: " + processID);
 

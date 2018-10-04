@@ -25,7 +25,6 @@ import java.util.Map;
 import org.apache.commons.lang.NotImplementedException;
 import org.n52.wps.algorithm.annotation.Algorithm;
 import org.n52.wps.commons.WPSConfig;
-import org.n52.wps.project.riesgos.shakemap.algorithm.ShakemapAlgorithm;
 import org.n52.wps.server.AbstractAnnotatedAlgorithm;
 import org.n52.wps.server.IAlgorithm;
 import org.n52.wps.server.ITransactionalAlgorithmRepository;
