@@ -14,19 +14,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.n52.wps.project.riesgos.shakemap.modules;
+package org.n52.wps.project.riesgos.quakeml.modules;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.n52.wps.project.riesgos.shakemap.repository.ShakemapAlgorithmRepository;
+import org.n52.wps.project.riesgos.quakeml.repository.QuakeMLAlgorithmRepository;
 import org.n52.wps.webapp.api.AlgorithmEntry;
 import org.n52.wps.webapp.api.ClassKnowingModule;
 import org.n52.wps.webapp.api.ConfigurationCategory;
 import org.n52.wps.webapp.api.FormatEntry;
 import org.n52.wps.webapp.api.types.ConfigurationEntry;
 
-public class ShakemapAlgorithmRepositoryCM extends ClassKnowingModule{
+public class QuakeMLAlgorithmRepositoryCM extends ClassKnowingModule{
 
     private boolean isActive = true;
 
@@ -34,7 +34,7 @@ public class ShakemapAlgorithmRepositoryCM extends ClassKnowingModule{
 
     private List<? extends ConfigurationEntry<?>> configurationEntries = new ArrayList<>();
 
-    public ShakemapAlgorithmRepositoryCM() {
+    public QuakeMLAlgorithmRepositoryCM() {
         algorithmEntries = new ArrayList<>();
     }
 
@@ -75,7 +75,7 @@ public class ShakemapAlgorithmRepositoryCM extends ClassKnowingModule{
 
     @Override
     public String getClassName() {
-        return ShakemapAlgorithmRepository.class.getName();
+        return QuakeMLAlgorithmRepository.class.getName();
     }
 
 }

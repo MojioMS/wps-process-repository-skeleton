@@ -45,11 +45,11 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
  * Public License for more details.
  */
-package org.n52.wps.project.riesgos.shakemap.modules;
+package org.n52.wps.project.riesgos.quakeml.modules;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.n52.wps.project.riesgos.shakemap.io.QuakeMLGenerator;
+import org.n52.wps.project.riesgos.quakeml.io.QuakeMLParser;
 
 import org.n52.wps.webapp.api.AlgorithmEntry;
 import org.n52.wps.webapp.api.ClassKnowingModule;
@@ -57,7 +57,7 @@ import org.n52.wps.webapp.api.ConfigurationCategory;
 import org.n52.wps.webapp.api.FormatEntry;
 import org.n52.wps.webapp.api.types.ConfigurationEntry;
 
-public class ShakemapGeneratorCM extends ClassKnowingModule{
+public class QuakeMLParserCM extends ClassKnowingModule{
 
     private boolean isActive = true;
 
@@ -65,14 +65,14 @@ public class ShakemapGeneratorCM extends ClassKnowingModule{
 
     private List<FormatEntry> formatEntries;
 
-    public ShakemapGeneratorCM(){
+    public QuakeMLParserCM(){
         formatEntries = new ArrayList<>();
         configurationEntries = new ArrayList<>();
     }
 
     @Override
     public String getModuleName() {
-        return "Shakemap generator";
+        return "Shakemap parser";
     }
 
     @Override
@@ -87,7 +87,7 @@ public class ShakemapGeneratorCM extends ClassKnowingModule{
 
     @Override
     public ConfigurationCategory getCategory() {
-        return ConfigurationCategory.GENERATOR;
+        return ConfigurationCategory.PARSER;
     }
 
     @Override
@@ -107,7 +107,7 @@ public class ShakemapGeneratorCM extends ClassKnowingModule{
 
     @Override
     public String getClassName() {
-        return QuakeMLGenerator.class.getName();
+        return QuakeMLParser.class.getName();
     }
 
 }

@@ -9,8 +9,7 @@
 	<dependencySets>
 		<dependencySet>
 			<includes>
-				<include>org.n52.wps.riesgos:shakemap-process-repository</include>
-				<include>org.n52.wps:shakemap-xmlbeans</include>
+				<include>org.n52.wps.riesgos:quakeml-process-repository</include>
 			</includes>
 			<outputDirectory>deploy-to-wps</outputDirectory>
 		</dependencySet>

@@ -9,7 +9,7 @@
     </parent>
 
     <groupId>org.n52.wps.riesgos</groupId>
-    <artifactId>shakemap-process-repository</artifactId>
+    <artifactId>quakeml-process-repository</artifactId>
     <version>1-SNAPSHOT</version>
 
     <inceptionYear>2018</inceptionYear>

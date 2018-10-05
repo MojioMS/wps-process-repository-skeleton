@@ -1,4 +1,4 @@
-package org.n52.wps.project.riesgos.shakemap.algorithm;
+package org.n52.wps.project.riesgos.quakeml.algorithm;
 
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -15,23 +15,23 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import net.opengis.wps.x100.ProcessDescriptionsDocument;
-import org.n52.wps.project.riesgos.shakemap.io.QuakeMLDataBinding;
-import org.n52.wps.project.riesgos.shakemap.io.QuakeMLParser;
+import org.n52.wps.project.riesgos.quakeml.io.QuakeMLDataBinding;
+import org.n52.wps.project.riesgos.quakeml.io.QuakeMLParser;
 
-public class ShakemapAlgorithm extends AbstractObservableAlgorithm {
+public class QuakeMLAlgorithm extends AbstractObservableAlgorithm {
 
     private static Logger LOGGER = LoggerFactory
-            .getLogger(ShakemapAlgorithm.class);
+            .getLogger(QuakeMLAlgorithm.class);
 
     private List<String> errors = new ArrayList<>();
 
     private String processID;
     private String outputID = "shakemap";
 
-    public ShakemapAlgorithm(){
+    public QuakeMLAlgorithm(){
     }
 
-    public ShakemapAlgorithm(String processID) {
+    public QuakeMLAlgorithm(String processID) {
         this.processID = processID;
     }
 

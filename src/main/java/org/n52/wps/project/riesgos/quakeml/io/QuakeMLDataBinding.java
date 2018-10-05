@@ -1,14 +1,11 @@
-package org.n52.wps.project.riesgos.shakemap.io;
+package org.n52.wps.project.riesgos.quakeml.io;
 
 import org.geotools.feature.FeatureCollection;
 import org.n52.wps.io.data.IComplexData;
 
 public class QuakeMLDataBinding implements IComplexData {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 5635195859106892797L;
+    private static final long serialVersionUID = 5637307642806892797L;
 
     private FeatureCollection featureCollection;
 

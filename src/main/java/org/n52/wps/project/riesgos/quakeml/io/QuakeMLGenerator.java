@@ -1,4 +1,4 @@
-package org.n52.wps.project.riesgos.shakemap.io;
+package org.n52.wps.project.riesgos.quakeml.io;
 
 import com.vividsolutions.jts.geom.Coordinate;
 import com.vividsolutions.jts.geom.Point;

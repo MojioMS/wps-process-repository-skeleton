@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.n52.wps.project.riesgos.shakemap.repository;
+package org.n52.wps.project.riesgos.quakeml.repository;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -41,16 +41,16 @@ import org.slf4j.LoggerFactory;
  * @author foerster, pross
  *
  */
-public class ShakemapAlgorithmRepository implements
+public class QuakeMLAlgorithmRepository implements
         ITransactionalAlgorithmRepository {
 
     private static Logger LOGGER = LoggerFactory
-            .getLogger(ShakemapAlgorithmRepository.class);
+            .getLogger(QuakeMLAlgorithmRepository.class);
     private Map<String, ProcessDescription> processDescriptionMap;
     private Map<String, IAlgorithm> algorithmMap;
     private ConfigurationModule exampleAlgorithmRepoConfigModule;
 
-    public ShakemapAlgorithmRepository() {
+    public QuakeMLAlgorithmRepository() {
         processDescriptionMap = new HashMap<String, ProcessDescription>();
         algorithmMap = new HashMap<String, IAlgorithm>();
 
@@ -109,7 +109,7 @@ public class ShakemapAlgorithmRepository implements
 
     private IAlgorithm loadAlgorithm(String algorithmClassName)
             throws Exception {
-        Class<?> algorithmClass = ShakemapAlgorithmRepository.class
+        Class<?> algorithmClass = QuakeMLAlgorithmRepository.class
                 .getClassLoader().loadClass(algorithmClassName);
         IAlgorithm algorithm = null;
         if (IAlgorithm.class.isAssignableFrom(algorithmClass)) {
